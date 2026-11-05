@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Raihan Aufadhia Nugroho | UI/UX & PM Portfolio</title>
+    <style>
+        /* Tipografi & Variabel Warna */
+        @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap');
+
+        :root {
+            --bg-color: #121212;
+            --surface-color: #1c1c1e;
+            --accent-color: #FF9500;
+            --text-main: #f5f5f7;
+            --text-muted: #86868b;
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; font-family: 'Inter', sans-serif; }
+        body { background-color: var(--bg-color); color: var(--text-main); line-height: 1.6; overflow-x: hidden; }
+
+        /* Navbar Interaktif */
+        nav {
+            position: fixed; width: 100%; top: 0; background: rgba(18, 18, 18, 0.8);
+            backdrop-filter: blur(12px); z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center; 
+            padding: 1.2rem 8%; border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+        .logo { font-weight: 700; font-size: 1.4rem; color: var(--text-main); cursor: pointer; }
+        .logo span { color: var(--accent-color); }
+        .nav-links a { 
+            color: var(--text-main); text-decoration: none; margin-left: 2.5rem; 
+            font-size: 0.9rem; font-weight: 600; transition: color 0.3s; 
+        }
+        .nav-links a:hover, .nav-links a.active { color: var(--accent-color); }
+
+        /* Setup Transisi SPA (Fade In Up) */
+        section { 
+            min-height: 100vh; padding: 7rem 8% 3rem; display: flex; flex-direction: column; justify-content: center; 
+            opacity: 0; transform: translateY(30px); transition: all 0.8s cubic-bezier(0.5, 0, 0, 1); 
+        }
+        section.visible { opacity: 1; transform: translateY(0); }
+
+        /* Bagian Hero */
+        #home { align-items: flex-start; }
+        .hero-subtitle { color: var(--accent-color); font-weight: 600; letter-spacing: 2px; text-transform: uppercase; font-size: 0.85rem; margin-bottom: 1rem; }
+        .hero-title { font-size: 4rem; font-weight: 700; line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1px; }
+        .hero-desc { color: var(--text-muted); max-width: 550px; font-size: 1.1rem; margin-bottom: 2.5rem; }
+        .btn { 
+            display: inline-block; padding: 1rem 2.5rem; background: var(--accent-color); 
+            color: #fff; text-decoration: none; border-radius: 50px; font-weight: 600; 
+            transition: transform 0.3s, box-shadow 0.3s; 
+        }
+        .btn:hover { transform: translateY(-3px); box-shadow: 0 8px 25px rgba(255, 149, 0, 0.35); }
+
+        /* Bagian About */
+        .section-title { font-size: 2.5rem; margin-bottom: 2.5rem; font-weight: 700; }
+        .section-title span { color: var(--accent-color); }
+        .about-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4rem; align-items: center; }
+        .about-text { color: var(--text-muted); font-size: 1.05rem; }
+        .skills-container { display: flex; flex-direction: column; gap: 1.5rem; }
+        .skill-item h4 { color: var(--text-main); margin-bottom: 0.5rem; }
+        .skill-bar { width: 100%; height: 6px; background: var(--surface-color); border-radius: 10px; overflow: hidden; }
+        .skill-fill { height: 100%; background: var(--accent-color); border-radius: 10px; }
+
+        /* Bagian Portofolio / Projects */
+        .projects-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 2.5rem; }
+        .project-card { 
+            background: var(--surface-color); border-radius: 16px; padding: 2.5rem; 
+            transition: transform 0.4s, border-color 0.4s; border: 1px solid rgba(255,255,255,0.02); cursor: pointer; 
+        }
+        .project-card:hover { transform: translateY(-8px); border-color: var(--accent-color); }
+        .project-tag { font-size: 0.75rem; color: var(--accent-color); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; margin-bottom: 1rem; display: inline-block; }
+        .project-title { font-size: 1.5rem; margin-bottom: 1rem; font-weight: 600; }
+        .project-desc { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 2rem; }
+        .project-link { color: var(--text-main); text-decoration: none; font-size: 0.9rem; font-weight: 600; display: flex; align-items: center; gap: 0.5rem; transition: color 0.3s;}
+        .project-link:hover { color: var(--accent-color); }
+
+        /* Bagian Contact */
+        #contact { text-align: center; align-items: center; justify-content: center; }
+        .contact-email { font-size: 2.5rem; font-weight: 700; color: var(--accent-color); text-decoration: none; margin: 2rem 0; display: inline-block; transition: opacity 0.3s; }
+        .contact-email:hover { opacity: 0.8; }
+        footer { padding: 2rem; text-align: center; color: var(--text-muted); font-size: 0.9rem; border-top: 1px solid rgba(255,255,255,0.05); }
+
+        /* Responsivitas */
+        @media(max-width: 768px) {
+            .about-grid { grid-template-columns: 1fr; gap: 2rem; }
+            .hero-title { font-size: 3rem; }
+            .nav-links { display: none; } /* Bisa ditambahkan hamburger menu nanti */
+            section { padding: 6rem 5% 2rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navigasi -->
+    <nav>
+        <div class="logo">Raihan<span>.</span></div>
+        <div class="nav-links">
+            <a href="#home" class="active">Home</a>
+            <a href="#about">About</a>
+            <a href="#projects">Work</a>
+            <a href="#contact">Contact</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="visible">
+        <div class="hero-subtitle">UI/UX Designer & Product Manager</div>
+        <h1 class="hero-title">Merancang sistem dengan<br>pendekatan berpusat pada pengguna.</h1>
+        <p class="hero-desc">Menerjemahkan logika bisnis yang kompleks menjadi prototipe dan pengalaman digital yang pragmatis dan efisien.</p>
+        <a href="#projects" class="btn">Lihat Karya</a>
+    </section>
+
+    <!-- About Section -->
+    <section id="about">
+        <h2 class="section-title">Tentang <span>Saya</span></h2>
+        <div class="about-grid">
+            <div class="about-text">
+                <p>Halo! Saya Raihan Aufadhia Nugroho, mahasiswa Business Information Technology di BINUS University. Saya selalu antusias membangun solusi yang menjembatani kebutuhan bisnis dengan arsitektur sistem yang solid.</p>
+                <br>
+                <p>Bagi saya, desain produk bukan hanya soal estetika antarmuka, tetapi juga meliputi pembuatan spesifikasi UML, ERD, dan struktur database *low-code* untuk memecahkan masalah praktis (seperti keberlanjutan ekonomi selaras dengan SDG 8).</p>
+            </div>
+            <div class="skills-container">
+                <div class="skill-item">
+                    <h4>UI/UX & Prototyping (Figma)</h4>
+                    <div class="skill-bar"><div class="skill-fill" style="width: 90%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <h4>System Analysis & UML Diagramming</h4>
+                    <div class="skill-bar"><div class="skill-fill" style="width: 85%;"></div></div>
+                </div>
+                <div class="skill-item">
+                    <h4>Relational Database (MySQL, Supabase)</h4>
+                    <div class="skill-bar"><div class="skill-fill" style="width: 80%;"></div></div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Portfolio Projects -->
+    <section id="projects">
+        <h2 class="section-title">Karya & <span>Studi Kasus</span></h2>
+        <div class="projects-grid">
+            
+            <div class="project-card">
+                <span class="project-tag">Marketplace Platform</span>
+                <h3 class="project-title">Clicky</h3>
+                <p class="project-desc">Platform *service marketplace* yang menghubungkan klien dengan freelance fotografer, videografer, dan rental kamera menggunakan model komisi tunggal transparan.</p>
+                <a href="#" class="project-link">Lihat Detail <span>&rarr;</span></a>
+            </div>
+            
+            <div class="project-card">
+                <span class="project-tag">Mobile E-Commerce</span>
+                <h3 class="project-title">MyStyle</h3>
+                <p class="project-desc">Konsep aplikasi e-commerce fashion berbasis mobile yang mengintegrasikan kecerdasan buatan (AI) untuk memberikan rekomendasi outfit personal bagi pengguna.</p>
+                <a href="#" class="project-link">Lihat Detail <span>&rarr;</span></a>
+            </div>
+            
+            <div class="project-card">
+                <span class="project-tag">POS & AI System</span>
+                <h3 class="project-title">Smart Cafe POS</h3>
+                <p class="project-desc">Sistem *Point of Sales* komprehensif yang dilengkapi fitur order meja via QR, sistem antrean dapur (KDS), tracking stok opname, dan prediksi bahan baku berbasis AI.</p>
+                <a href="#" class="project-link">Lihat Detail <span>&rarr;</span></a>
+            </div>
+            
+            <div class="project-card">
+                <span class="project-tag">Hybrid App Concept</span>
+                <h3 class="project-title">Copyin</h3>
+                <p class="project-desc">Aplikasi hybrid inovatif yang menggabungkan layanan pencetakan dokumen on-demand dengan platform e-commerce untuk alat tulis kantor.</p>
+                <a href="#" class="project-link">Lihat Detail <span>&rarr;</span></a>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Contact Section -->
+    <section id="contact">
+        <h2 class="section-title">Mari <span>Berkolaborasi</span></h2>
+        <p class="hero-desc" style="margin: 0 auto; text-align: center;">Mencari seseorang untuk memimpin analisis produk atau mengeksekusi *wireframing*? Jangan ragu untuk menyapa.</p>
+        <a href="mailto:email.kamu@example.com" class="contact-email">Kirim Pesan</a>
+    </section>
+
+    <footer>
+        © 2026 Raihan Aufadhia Nugroho. All rights reserved.
+    </footer>
+
+    <!-- Interaktivitas & Animasi DOM -->
+    <script>
+        // Deteksi scroll untuk mengaktifkan indikator pada menu navigasi
+        const sections = document.querySelectorAll('section');
+        const navLinks = document.querySelectorAll('.nav-links a');
+
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.clientHeight;
+                if (pageYOffset >= (sectionTop - sectionHeight / 3)) {
+                    current = section.getAttribute('id');
+                }
+            });
+
+            navLinks.forEach(link => {
+                link.classList.remove('active');
+                if (link.getAttribute('href').substring(1) === current) {
+                    link.classList.add('active');
+                }
+            });
+        });
+
+        // Intersection Observer untuk memunculkan elemen saat di-scroll (Fade-in animasi)
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, { threshold: 0.15 });
+
+        sections.forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>
